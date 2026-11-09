@@ -1,0 +1,47 @@
+@url = http://localhost:3000
+
+### 1. Registrar un nuevo usuario
+POST {{url}}/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Operador Logístico",
+  "email": "operador@transporte.com",
+  "password": "password123"
+}
+
+### 2. Login con credenciales correctas
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@transporte.com",
+  "password": "password123"
+}
+
+### 3. Extraer token de respuesta del login
+@token = {{login.response.body.token}}
+
+### 4. Consultar perfil con token JWT (Ruta protegida)
+GET {{url}}/auth/perfil
+Authorization: Bearer {{token}}
+
+### 5. Login con contraseña incorrecta (Debe devolver 401)
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@transporte.com",
+  "password": "clave_incorrecta"
+}
+
+### 6. Registrar usuario con datos inválidos (Debe devolver 400)
+POST {{url}}/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "A",
+  "email": "correo_no_valido",
+  "password": "123"
+}
