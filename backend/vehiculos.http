@@ -1,0 +1,78 @@
+@url = http://localhost:3000
+
+### 1. Iniciar sesión para obtener token
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@transporte.com",
+  "password": "password123"
+}
+
+### Extraer token
+@token = {{login.response.body.token}}
+
+### 2. Listar todos los vehículos
+GET {{url}}/vehiculos
+Authorization: Bearer {{token}}
+
+### 3. Listar vehículos filtrando por marca
+GET {{url}}/vehiculos?marca=Scania
+Authorization: Bearer {{token}}
+
+### 4. Obtener detalle de vehículo por ID
+GET {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+
+### 5. Obtener historial de viajes del vehículo
+GET {{url}}/vehiculos/1/viajes
+Authorization: Bearer {{token}}
+
+### 6. Calcular total de kilómetros recorridos por el vehículo
+GET {{url}}/vehiculos/1/kilometros
+Authorization: Bearer {{token}}
+
+### 7. Dar de alta nuevo vehículo
+# @name nuevoVehiculo
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Scania",
+  "modelo": "G410",
+  "patente": "AG789ZZ",
+  "anio": 2024,
+  "capacidad_carga": 26000.00
+}
+
+### 8. Modificar vehículo creado
+PUT {{url}}/vehiculos/{{nuevoVehiculo.response.body.id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Scania",
+  "modelo": "G410 Highline",
+  "patente": "AG789ZZ",
+  "anio": 2024,
+  "capacidad_carga": 27500.00
+}
+
+### 9. Eliminar vehículo
+DELETE {{url}}/vehiculos/{{nuevoVehiculo.response.body.id}}
+Authorization: Bearer {{token}}
+
+### 10. Probar validación errónea (Debe devolver 400)
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "",
+  "modelo": "",
+  "patente": "A",
+  "anio": 1800,
+  "capacidad_carga": -50
+}

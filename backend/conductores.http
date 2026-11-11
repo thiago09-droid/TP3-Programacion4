@@ -1,0 +1,81 @@
+@url = http://localhost:3000
+
+### 1. Iniciar sesión para obtener token
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@transporte.com",
+  "password": "password123"
+}
+
+### Extraer token
+@token = {{login.response.body.token}}
+
+### 2. Listar todos los conductores
+GET {{url}}/conductores
+Authorization: Bearer {{token}}
+
+### 3. Listar conductores con búsqueda por texto
+GET {{url}}/conductores?buscar=Carlos
+Authorization: Bearer {{token}}
+
+### 4. Obtener detalle de conductor por ID
+GET {{url}}/conductores/1
+Authorization: Bearer {{token}}
+
+### 5. Obtener historial de viajes del conductor
+GET {{url}}/conductores/1/viajes
+Authorization: Bearer {{token}}
+
+### 6. Calcular total de kilómetros recorridos por el conductor
+GET {{url}}/conductores/1/kilometros
+Authorization: Bearer {{token}}
+
+### 7. Dar de alta nuevo conductor
+# @name nuevoConductor
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Roberto",
+  "apellido": "Alvarez",
+  "documento": "34112233",
+  "licencia": "LIC-88990",
+  "fecha_alta_licencia": "2020-04-10",
+  "fecha_vencimiento_licencia": "2028-04-10"
+}
+
+### 8. Modificar conductor creado
+PUT {{url}}/conductores/{{nuevoConductor.response.body.id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Roberto Carlos",
+  "apellido": "Alvarez",
+  "documento": "34112233",
+  "licencia": "LIC-88990",
+  "fecha_alta_licencia": "2020-04-10",
+  "fecha_vencimiento_licencia": "2029-04-10"
+}
+
+### 9. Eliminar conductor
+DELETE {{url}}/conductores/{{nuevoConductor.response.body.id}}
+Authorization: Bearer {{token}}
+
+### 10. Probar validación con fechas erróneas (vencimiento antes de alta -> 400)
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Test",
+  "apellido": "Error",
+  "documento": "99999999",
+  "licencia": "LIC-99999",
+  "fecha_alta_licencia": "2026-05-10",
+  "fecha_vencimiento_licencia": "2025-05-10"
+}

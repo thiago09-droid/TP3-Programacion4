@@ -1,0 +1,81 @@
+@url = http://localhost:3000
+
+### 1. Iniciar sesión para obtener token
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@transporte.com",
+  "password": "password123"
+}
+
+### Extraer token
+@token = {{login.response.body.token}}
+
+### 2. Listar todos los viajes (con datos asociados de vehículo y conductor)
+GET {{url}}/viajes
+Authorization: Bearer {{token}}
+
+### 3. Filtrar viajes por vehículo
+GET {{url}}/viajes?vehiculo_id=1
+Authorization: Bearer {{token}}
+
+### 4. Filtrar viajes por conductor
+GET {{url}}/viajes?conductor_id=1
+Authorization: Bearer {{token}}
+
+### 5. Obtener detalle de viaje por ID
+GET {{url}}/viajes/1
+Authorization: Bearer {{token}}
+
+### 6. Registrar nuevo viaje asociando vehículo y conductor
+# @name nuevoViaje
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 2,
+  "conductor_id": 2,
+  "fecha_salida": "2026-11-10T08:00:00",
+  "fecha_llegada": "2026-11-10T19:30:00",
+  "origen": "Rosario",
+  "destino": "Santa Fe",
+  "kilometros": 175.50,
+  "observaciones": "Entrega completada a tiempo"
+}
+
+### 7. Modificar viaje creado
+PUT {{url}}/viajes/{{nuevoViaje.response.body.id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 2,
+  "conductor_id": 2,
+  "fecha_salida": "2026-11-10T08:00:00",
+  "fecha_llegada": "2026-11-10T20:00:00",
+  "origen": "Rosario",
+  "destino": "Santa Fe Centro",
+  "kilometros": 180.00,
+  "observaciones": "Entrega completada con demora de 30 min por tráfico"
+}
+
+### 8. Eliminar viaje
+DELETE {{url}}/viajes/{{nuevoViaje.response.body.id}}
+Authorization: Bearer {{token}}
+
+### 9. Probar alta con vehículo inexistente (Debe devolver 400)
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 99999,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00:00",
+  "origen": "La Rioja",
+  "destino": "Catamarca",
+  "kilometros": 150
+}
