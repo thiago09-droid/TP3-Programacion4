@@ -6,7 +6,7 @@
 
 ---
 
-## 📋 Descripción del Proyecto
+##  Descripción del Proyecto
 
 Aplicación Full-Stack desarrollada para una empresa de transporte y logística, que permite:
 - Registrar y administrar la flota de **vehículos** (marca, modelo, patente, año, capacidad de carga).
@@ -19,7 +19,7 @@ Aplicación Full-Stack desarrollada para una empresa de transporte y logística,
 
 ---
 
-## 🗂️ Estructura del Repositorio
+##  Estructura del Repositorio
 
 El proyecto se divide de forma limpia en dos módulos independientes:
 
@@ -69,7 +69,7 @@ El proyecto se divide de forma limpia en dos módulos independientes:
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 - **Frontend:**
   - [React 19](https://react.dev/) + [Vite](https://vite.dev/)
@@ -91,7 +91,7 @@ El proyecto se divide de forma limpia en dos módulos independientes:
 
 ---
 
-## 🚀 Puesta en Marcha
+##  Puesta en Marcha
 
 ### 1. Configuración de la Base de Datos
 
@@ -134,7 +134,7 @@ La aplicación web se ejecutará en `http://localhost:5173`.
 
 ---
 
-## 🔑 Credenciales de Prueba (Semilla de Datos)
+##  Credenciales de Prueba (Semilla de Datos)
 
 El script SQL incluye datos iniciales para poder probar la aplicación inmediatamente:
 
@@ -187,7 +187,7 @@ El script SQL incluye datos iniciales para poder probar la aplicación inmediata
 
 ---
 
-## 🧪 Pruebas con archivos `.http`
+##  Pruebas con archivos `.http`
 
 Dentro de la carpeta `backend/` se encuentran archivos `.http` listos para ser utilizados con la extensión **REST Client** de VS Code:
 - `backend/auth.http`: Pruebas de registro, login válido/inválido y token.
@@ -197,7 +197,7 @@ Dentro de la carpeta `backend/` se encuentran archivos `.http` listos para ser u
 
 ---
 
-## ✅ Cumplimiento de Criterios de Evaluación
+##  Cumplimiento de Criterios de Evaluación
 
 1. **Estructura del proyecto (10 pts):** Separación nítida en carpetas `backend/` y `frontend/`, respetando fielmente las convenciones, nombres y patrones vistos en las clases del docente.
 2. **Validación de datos (15 pts):** Implementación de `express-validator` en todas las rutas de obtención, creación y actualización, con códigos HTTP adecuados (400, 401, 403, 404, 500).
